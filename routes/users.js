@@ -4,12 +4,38 @@ const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 
 /* GET users listing. */
-router.post('/register', function(req, res, next) {
+router.get('/', function(req, res, next) {
   const email = req.body.email
-  const password = req.body.password
+  if (!email) {
+    res.status(400).json({
+      error: true,
+      message: "Request body incomplete- email and password needed"
+    })
+    return;
+  }
+
+  const queryUsers = req.db.from("user").select("*").where("email", "=", email)
+  queryUsers.then((users)=> {
+    if (users.length > 0) {
+      return res.json(users)
+    }else {
+      return res.status(400).json({
+        error: true,
+        message: "No such user exists"
+      })
+    }
+  })
+
+})
+
+
+router.post('/register', function(req, res, next) {
+  const name = req.body.name;
+  const email = req.body.email;
+  const password = req.body.password;
 
   //verify user ifo
-  if (!email || !password){
+  if (!email || !password || !name){
     res.status(400).json({
       error: true,
       message: "Request body incomplete- email and password needed"
@@ -28,7 +54,7 @@ router.post('/register', function(req, res, next) {
     const hash = bcrypt.hashSync(password, salRounds);
     console.log("Email", email);
     console.log("Password", hash);
-    return req.db.from("user").insert({email, hash});
+    return req.db.from("user").insert({name, email, hash});
   }
   ).then(() => {
     res.status(201).json(
@@ -71,10 +97,12 @@ router.post("/login", function(req, res, next) {
     //create jwt token
     const expires_in = 60*60*24
     const exp = Date.now() + expires_in*1000
-    var token = jwt.sign({email, }, process.env.JWT_KEY)
+    var token = jwt.sign({email, exp}, process.env.JWT_KEY)
     res.json({token_type: "Bearer", token, expires_in})
 
   })
 });
+
+
 
 module.exports = router;

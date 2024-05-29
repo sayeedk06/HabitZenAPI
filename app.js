@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-const db = require("./db");
+const db = require("./middleware/db");
 const knex = require("knex")(db)  
 
 var indexRouter = require('./routes/index');
