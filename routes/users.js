@@ -2,21 +2,15 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
+var authorize = require('../middleware/auth');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  const email = req.body.email
-  if (!email) {
-    res.status(400).json({
-      error: true,
-      message: "Request body incomplete- email and password needed"
-    })
-    return;
-  }
 
-  const queryUsers = req.db.from("user").select("*").where("email", "=", email)
+router.get('/',authorize,function(req, res, next) {
+  const queryUsers = req.db.from("user").select("*")
   queryUsers.then((users)=> {
     if (users.length > 0) {
+      console.log(users)
       return res.json(users)
     }else {
       return res.status(400).json({
@@ -28,6 +22,31 @@ router.get('/', function(req, res, next) {
 
 })
 
+router.get('/:email',function(req, res, next) {
+  const email = req.params.email
+  console.log("eassss "+ email)
+  if (!email) {
+    res.status(400).json({
+      error: true,
+      message: "Request body incomplete- email and password needed"
+    })
+    return;
+  }
+
+  const queryUsers = req.db.from("user").select("*").where("email", "=", email)
+  queryUsers.then((users)=> {
+    if (users.length > 0) {
+      console.log(users)
+      return res.json(users);
+    }else {
+      return res.status(400).json({
+        error: true,
+        message: "No such user exists"
+      })
+    }
+  })
+
+})
 
 router.post('/register', function(req, res, next) {
   const name = req.body.name;
