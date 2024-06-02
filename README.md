@@ -19,7 +19,7 @@ This project complements the [HabitZen app](https://github.com/sayeedk06/HabitZe
 - public
 - routes
 
-**API endpints**
+**API endpoints**
 - 
 - GET -    http://localhost:8000/api/habits
 - GET -    http://localhost:8000/api/habits/:userId
