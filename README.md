@@ -32,4 +32,10 @@ This project complements the [HabitZen app](https://github.com/sayeedk06/HabitZe
 - GET -    http://localhost:8000/api/habits/users/
 - GET -    http://localhost:8000/api/habits/users/:email
 
+Swagger documentation runs in http://localhost:8000/docs/
+
+### Running the API
+>npm run dev
+
+This will start the nodemon server in http://localhost:8000
 
