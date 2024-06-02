@@ -1,0 +1,293 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+      "title": "HabitZen API",
+      "description": "This is an Express API for the HabitZen mobile application. It supports creation, update, deleting and getting habits for the app with user authentication",
+      "version": "1.0.0",
+      "contact": {
+        "email": "n11672005@qut.edu.au"
+      },
+      "license": {
+        "name": "GNU GENERAL PUBLIC LICENSE",
+        "url": "https://www.gnu.org/licenses/gpl-3.0.en.html"
+      }
+    },
+    "paths": {
+      "/api/habits": {
+        "get": {
+          "summary": "List habits",
+          "description": "Full listing of user created habits from the database",
+          "parameters": {
+            "idhabits": "integer"
+          },
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "enum": ["true", "false"]
+                      },
+                      "habits": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "idhabits": {
+                                "type": "integer"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "category": {
+                                "type": "string"
+                            },
+                            "goals": {
+                                "type": "string"
+                              },
+                              "period": {
+                                "type": "string"
+                              },
+                              "tags": {
+                                "type": "string"
+                              },
+                              "startTerm": {
+                                "type": "date"
+                              },
+                              "endTerm":{
+                                "type": "date"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/habits/:userId": {
+        "get": {
+          "summary": "List habits based on user",
+          "description": "List habits based on the user id from the database",
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "enum": ["true", "false"]
+                      },
+                      "habits": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "idhabits": {
+                                "type": "integer"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "category": {
+                                "type": "string"
+                            },
+                            "goals": {
+                                "type": "string"
+                              },
+                              "period": {
+                                "type": "string"
+                              },
+                              "tags": {
+                                "type": "string"
+                              },
+                              "startTerm": {
+                                "type": "date"
+                              },
+                              "endTerm":{
+                                "type": "date"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      
+      "/api/habits/update/:habitId": {
+        "put": {
+          "summary": "update habits based on habitid",
+          "description": "update habits based on the habit id from the database",
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "enum": ["true", "false"]
+                      },
+                      "success": {
+                        "type": "string",
+                        "message": "Scuccessfully executed"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/habits/delete/:habitId": {
+        "delete": {
+          "summary": "Delete habits based on habitId",
+          "description": "Delete habits based on the habit id from the database",
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "enum": ["true", "false"]
+                      },
+                      "success": {
+                        "type": "string",
+                        "message": "Scuccessfully executed"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/habits/": {
+        "post": {
+          "summary": "Create habits based on user",
+          "description": "Create habits based on the user id from the database",
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "enum": ["true", "false"]
+                      },
+                      "success": {
+                        "type": "string",
+                        "message": "Scuccessfully executed"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/users/login": {
+        "get": {
+          "summary": "login user",
+          "description": "Create a jwt token for user authorization",
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "enum": ["true", "false"]
+                      },
+                      "token_type": {
+                        "type":"string"
+                    },
+                    "token": {
+                        "type": "string"
+                    },
+                    "expires_in": {
+                        "type": "string"
+                    }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/users/:email": {
+        "get": {
+          "summary": "List user",
+          "description": "Get user info based on email",
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "enum": ["true", "false"]
+                      },
+                      "iduser": {
+                        "type":"integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "hash": {
+                        "type": "string"
+                    }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }

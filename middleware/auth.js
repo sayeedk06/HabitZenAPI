@@ -1,6 +1,9 @@
 var jwt = require('jsonwebtoken');
+
+// This middleware helps to authorize tokens sent from the frontend by verifying it with the creation secret key
 const auth = (req, res, next) => {
     const authorization = req.headers.authorization;
+    console.log("BLAA" + authorization)
     let token = null;
     //find token
     if (authorization && authorization.split(" ").length===2) {

@@ -6,7 +6,7 @@ var authorize = require('../middleware/auth');
 
 /* GET users listing. */
 
-router.get('/',authorize,function(req, res, next) {
+router.get('/',function(req, res, next) {
   const queryUsers = req.db.from("user").select("*")
   queryUsers.then((users)=> {
     if (users.length > 0) {

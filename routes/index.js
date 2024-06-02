@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.get('/api/habits/', function (req, res, next) {
+router.get('/api/habits/',function (req, res, next) {
   const idhabits = req.query.idhabits;
 
   if (idhabits) {
@@ -24,19 +24,14 @@ router.get('/api/habits/', function (req, res, next) {
 
 });
 
-// router.get('/api/habits/', function(req, res, next) {
-//   const query = req.db.from("habits").select("*")
-//   return query.then(result => {
-//     res.json(result);
-//   })
-
-// });
 
 
-router.get('/api/habits/:userId', function (req, res, next) {
+
+router.get('/api/habits/:userId',function (req, res, next) {
 
   const userId = req.params.userId;
-
+  const head = req.headers.authorization
+  console.log(head)
   if (!userId) {
     res.status(400).json({
       error: true,
@@ -91,21 +86,8 @@ router.post("/api/habits", function (req, res, next) {
 });
 
 
-// router.post("/api/habits/delete/:habitId", function(req, res, next) {
 
-//   const habitId = req.body.habitId;
-//   if (!habitId) {
-//     res.status(400).json( {
-//       error: true,
-//       message: "Request body incomplete - please check the missing input field"
-//     });
-//     return;
-//   }
-//   return req.db.from("habits").where("idhabits", "=", habitId).del()
-
-// });
-
-router.delete("/api/habits/delete/:habitId", function (req, res, next) {
+router.delete("/api/habits/delete/:habitId",authorize, function (req, res, next) {
 
   const habitId = req.params.habitId;
   if (!habitId) {
@@ -156,4 +138,6 @@ router.put("/api/habits/update/:habitId", function (req, res, next) {
     res.json({ success: true, message: 'Successfully executed' })
   })
 });
+
+
 module.exports = router;
